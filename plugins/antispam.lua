@@ -38,7 +38,7 @@ function plugin.onEveryMessage(msg)
                         api.sendMessage(msg.chat.id, _('%s %s para *spam*! (%d/%d)'):format(name, hammer_text, warns_received, max_allowed), true)
                     end
                 else
-                    api.sendReply(msg, _('%s, esse tipo de spam não é permitido neste grupo (*%d/%d*)'):format(name, warns_received, max_allowed), true)
+                    api.sendReply(msg, _('%s, esse tipo de spam não é permitido neste grupo seu lixo (*%d/%d*)'):format(name, warns_received, max_allowed), true)
                 end
             end
         end

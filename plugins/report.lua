@@ -1,15 +1,15 @@
 local plugin = {}
 
 local function report(msg, description, realm_id)
-    local text = _('• *Message reported by*: %s (`%d`)\n• *Group*: %s'):format(misc.getname_final(msg.from), msg.from.id, msg.chat.title:escape())
+    local text = _('• *Mensagem enviada*: %s (`%d`)\n• *Grupo*: %s'):format(misc.getname_final(msg.from), msg.from.id, msg.chat.title:escape())
     if msg.reply.sticker then
-        text = text.._('\n• *Sticker sent by*: %s (`%d`)'):format(misc.getname_final(msg.reply.from), msg.reply.from.id)
+        text = text.._('\n• *Sticker enviado por*: %s (`%d`)'):format(misc.getname_final(msg.reply.from), msg.reply.from.id)
     end
     if msg.chat.username then
-        text = text.._('\n• [Go to the message](%s)'):format('telegram.me/'..msg.chat.username..'/'..msg.message_id)
+        text = text.._('\n• [Ir até a msg](%s)'):format('telegram.me/'..msg.chat.username..'/'..msg.message_id)
     end
     if description then
-        text = text.._('\n• *Description*: %s'):format(description:escape(true))
+        text = text.._('\n• *Descrição*: %s'):format(description:escape(true))
     end
     
     local n = 0
@@ -51,9 +51,9 @@ function plugin.onTextMessage(msg, blocks)
     local text
     
     if n_sent < 0 then
-        text = _('_Reported in the admins group_')
+        text = _('_Reportado a deus e seus semideuses_')
     else
-        text = _('_Reported to %d admin(s)_'):format(n_sent)
+        text = _('_Reportado %d admin(s)_'):format(n_sent)
     end
     
     api.sendReply(msg, text, true)

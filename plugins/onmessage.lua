@@ -71,9 +71,9 @@ function plugin.onEveryMessage(msg)
         	    if res then
         	        misc.saveBan(msg.from.id, 'flood') --save ban
         	        if action == 'ban' then
-        	            message = _("%s *banned* for flood!"):format(name)
+        	            message = _("%s *banido* por flood seu viado!"):format(name)
         	        else
-        	            message = _("%s *kicked* for flood!"):format(name)
+        	            message = _("%s *kickada* por flood!"):format(name)
         	        end
         	        if msgs_sent == (msgs_max + 1) or msgs_sent == msgs_max + 5 then --send the message only if it's the message after the first message flood. Repeat after 5
         	            api.sendMessage(msg.chat.id, message, true)
@@ -82,7 +82,7 @@ function plugin.onEveryMessage(msg)
         	end
             
             if msg.cb then
-                api.answerCallbackQuery(msg.cb_id, _("‼️ Please don't abuse the keyboard, requests will be ignored"))
+                api.answerCallbackQuery(msg.cb_id, _("‼️ Por favor, não abuse do teclado, ou vc levará vácuo!"))
             end
             return false --if an user is spamming, don't go through plugins
         end

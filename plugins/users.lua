@@ -79,34 +79,34 @@ local function get_ban_info(user_id, chat_id)
 		text = _("Nothing to display\n")
 	else
 		local ban_index = {
-			kick = _("Kicked: *%d*"),
-			ban = _("Banned: *%d*"),
-			tempban = _("Temporarily banned: *%d*"),
-			flood = _("Removed for flooding chat: *%d*"),
-			media = _("Removed for forbidden media: *%d*"),
-			warn = _("Removed for max warnings: *%d*"),
-			arab = _("Removed for arab chars: *%d*"),
-			rtl = _("Removed for RTL char: *%d*"),
+			kick = _("Kickado: *%d*"),
+			ban = _("Banido: *%d*"),
+			tempban = _("Temp ban: *%d*"),
+			flood = _("Acusado de flooding: *%d*"),
+			media = _("Removido por midia inválida: *%d*"),
+			warn = _("Removido por 3 avisos: *%d*"),
+			arab = _("Removido por ser arabe: *%d*"),
+			rtl = _("Removido por sla: *%d*"),
 		}
 		text = ''
 		for type,n in pairs(ban_info) do
 			text = text..ban_index[type]:format(n)..'\n'
 		end
 		if text == '' then
-			return _("Nothing to display")
+			return _("Nada para mostrar")
 		end
 	end
 	local warns = (db:hget('chat:'..chat_id..':warns', user_id)) or 0
 	local media_warns = (db:hget('chat:'..chat_id..':mediawarn', user_id)) or 0
 	local spam_warns = (db:hget('chat:'..chat_id..':spamwarns', user_id)) or 0
-	text = text..'\n`Warnings`: '..warns..'\n`Media warnings`: '..media_warns..'\n`Spam warnings`: '..spam_warns
+	text = text..'\n`Avisos`: '..warns..'\n`Midias proibidas`: '..media_warns..'\n`Spams`: '..spam_warns
 	return text
 end
 
 local function do_keyboard_userinfo(user_id)
 	local keyboard = {
 		inline_keyboard = {
-			{{text = _("Remove warnings"), callback_data = 'userbutton:remwarns:'..user_id}},
+			{{text = _("Remover avisos"), callback_data = 'userbutton:remwarns:'..user_id}},
 			{{text = _("🔨 Ban"), callback_data = 'userbutton:banuser:'..user_id}},
 		}
 	}
@@ -125,16 +125,16 @@ function plugin.onTextMessage(msg, blocks)
 		if msg.reply and msg.reply.from.id == msg.from.id or
 				not msg.reply and msg.chat.type == 'private' then
 			what = msg.from.id
-			text = _("That's your ID. Copy it")
+			text = _("Sua ID")
 		elseif msg.reply and msg.reply.from.id == bot.id then
 			what = bot.id
-			text = _("That's my ID. Copy it")
+			text = _("Minha ID")
 		elseif not msg.reply then
 			what = msg.chat.id
-			text = _("That's the ID of this group. Copy it")
+			text = _("ID do grupo")
 		else
 			what = msg.reply.from.id
-			text = _("That's his (her) ID. Copy it")
+			text = _("Essa é sua identificação. Copie-o")
 		end
 
 		local where
@@ -158,7 +158,7 @@ function plugin.onTextMessage(msg, blocks)
 	if blocks[1] == 'adminlist' then
     	local out
         local creator, adminlist = misc.getAdminlist(msg.chat.id)
-		out = _("*Creator*:\n%s\n\n*Admins*:\n%s"):format(creator, adminlist)
+		out = _("*Deus*:\n%s\n\n*Semideuses*:\n%s"):format(creator, adminlist)
         if not roles.is_admin_cached(msg) then
         	api.sendMessage(msg.from.id, out, true)
         else

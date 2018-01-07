@@ -213,13 +213,13 @@ end
 function plugin.onCallbackQuery(msg, blocks)
     local chat_id = msg.target_id
 	if not roles.is_admin_cached(chat_id, msg.from.id) then
-		api.answerCallbackQuery(msg.cb_id, _("You're no longer an admin"))
+		api.answerCallbackQuery(msg.cb_id, _("Você não é mais um administrador kkk"))
 	else
 	    if not chat_id then
 	        api.sendAdmin('Not msg.target_id -> menu') return
 	    end
 	    
-	    local menu_first = _("Manage the settings of the group")
+	    local menu_first = _("Gerencie as configurações do grupo")
     
         local keyboard, text, show_alert
         

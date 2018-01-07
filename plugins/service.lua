@@ -12,12 +12,12 @@ function plugin.onTextMessage(msg, blocks)
 		end]]
 
 		if misc.is_blocked_global(msg.from.id) then
-			api.sendMessage(msg.chat.id, _("_You (user ID: %d) are in the blocked list_"):format(msg.from.id), true)
+			api.sendMessage(msg.chat.id, _("_VoÊ (user ID: %d) está na lista negra kkk_"):format(msg.from.id), true)
 			api.leaveChat(msg.chat.id)
 			return
 		end
 		if config.bot_settings.admin_mode and not roles.is_superadmin(msg.from.id) then
-			api.sendMessage(msg.chat.id, _("_Admin mode is on: only the bot admin can add me to a new group_"), true)
+			api.sendMessage(msg.chat.id, _("_O modo Admin está ativado: somente o administrador do bot pode me adicionar a um novo grupo_"), true)
 			api.leaveChat(msg.chat.id)
 			return
 		end
@@ -31,11 +31,11 @@ function plugin.onTextMessage(msg, blocks)
 		-- send manuals
 		local text
 		if blocks[1] == 'new_chat_member:bot' then
-			text = _("Hello everyone!\n"
-				.. "My name is %s, and I'm a bot made to help administrators in their hard work.\n")
+			text = _("Olá a todos!\n"
+				.. "Meu nome é %s, e eu sou um bot feito para ajudar os administradores a dar ban :).\n")
 				:format(bot.first_name:escape())
 		else
-			text = _("Yay! This group has been upgraded. You are great! Now I can work properly :)\n")
+			text = _("Este grupo foi atualizado. Você é ótimo! Agora eu posso funcionar corretamente :)\n")
 		end
 		--[[if not roles.is_admin_cached(msg.chat.id, bot.id) then
 			if roles.is_owner_cached(msg.chat.id, msg.from.id) then

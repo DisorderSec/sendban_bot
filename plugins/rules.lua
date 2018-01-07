@@ -16,7 +16,7 @@ function plugin.onTextMessage(msg, blocks)
 
 			local res = api.getChat(msg.chat.id)
 			if not res then
-				api.sendMessage(msg.from.id, _("🚫 Unknown or non-existent group"))
+				api.sendMessage(msg.from.id, _("🚫 Grupo nem existe"))
 				return
 			end
 			-- Private chats have no an username
@@ -24,8 +24,8 @@ function plugin.onTextMessage(msg, blocks)
 
 			local res = api.getChatMember(msg.chat.id, msg.from.id)
 			if not res or (res.result.status == 'left' or res.result.status == 'kicked') and private then
-				api.sendMessage(msg.from.id, _("🚷 You are not a member of this chat. " ..
-					"You can't read the rules of a private group."))
+				api.sendMessage(msg.from.id, _("🚷 You are dead. " ..
+					"Você não é um membro do grupo."))
 				return
 			end
     	else
@@ -49,13 +49,13 @@ function plugin.onTextMessage(msg, blocks)
 		local input = blocks[2]
 		--ignore if not input text
 		if not input then
-			api.sendReply(msg, _("Please write something next this poor `/setrules`"), true)
+			api.sendReply(msg, _("Por favor, escreva algo ao lado dessa porr* `/setrules`"), true)
 			return
 		end
     	--check if a mod want to clean the rules
 		if input == '-' then
 			db:hdel(hash, 'rules')
-			api.sendReply(msg, _("Rules has been deleted."))
+			api.sendReply(msg, _("Regras deletadas."))
 			return
 		end
 		
@@ -66,7 +66,7 @@ function plugin.onTextMessage(msg, blocks)
 		else
 			db:hset(hash, 'rules', input)
 			local id = res.result.message_id
-			api.editMessageText(msg.chat.id, id, _("New rules *saved successfully*!"), true)
+			api.editMessageText(msg.chat.id, id, _("Novas regras salvas*!"), true)
 		end
 	end
 end

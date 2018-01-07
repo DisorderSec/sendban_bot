@@ -123,7 +123,7 @@ function plugin.onTextMessage(msg, blocks)
 		    		api.sendReply(msg, motivation, true)
 		    	else
 		    		misc.saveBan(user_id, 'kick')
-		    		api.sendMessage(msg.chat.id, _("%s kickado %s!"):format(admin, kicked), true)
+		    		api.sendMessage(msg.chat.id, _("%s chutou %s!"):format(admin, kicked), true)
 		    	end
 	    	end
 	   		if blocks[1] == 'ban' then
@@ -138,12 +138,12 @@ function plugin.onTextMessage(msg, blocks)
 		    		--save the ban
 		    		misc.saveBan(user_id, 'ban')
 		    		--misc.logEvent('ban', msg, blocks, 'cnhdc cbhdhcbhcd bcdhcdbc')
-		    		api.sendMessage(msg.chat.id, _("%s banned hahah %s!"):format(admin, kicked), true)
+		    		api.sendMessage(msg.chat.id, _("%s baniu esse lixo %s!"):format(admin, kicked), true)
 		    	end
     		end
    			if blocks[1] == 'unban' then
    				api.unbanUser(chat_id, user_id)
-   				local text = _("User %s desbanido pelo %s!"):format(kicked, admin)
+   				local text = _("User %s foi desbanido pelo %s!"):format(kicked, admin)
    				api.sendReply(msg, text, true)
    			end
 		else

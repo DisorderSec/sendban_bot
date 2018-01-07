@@ -31,7 +31,7 @@ function plugin.onTextMessage(msg, blocks)
 	    			to_save = '###file_id###:'..file_id
 	    		end
 	    		db:hset('chat:'..msg.chat.id..':extra', blocks[2], to_save)
-	    		api.sendReply(msg, _("This media has been saved as a response to %s"):format(blocks[2]))
+	    		api.sendReply(msg, _("Esta mídia foi salva como resposta a %s"):format(blocks[2]))
 	    	end
 		else
 	    	local hash = 'chat:'..msg.chat.id..':extra'
@@ -42,7 +42,7 @@ function plugin.onTextMessage(msg, blocks)
     		else
 	    		db:hset(hash, blocks[2], blocks[3])
 	    		local msg_id = res.result.message_id
-				api.editMessageText(msg.chat.id, msg_id, _("Command '%s' saved!"):format(blocks[2]))
+				api.editMessageText(msg.chat.id, msg_id, _("Comando '%s' salvo!"):format(blocks[2]))
     		end
     	end
 	elseif blocks[1] == 'extra list' then
@@ -58,10 +58,10 @@ function plugin.onTextMessage(msg, blocks)
 	    local hash = 'chat:'..msg.chat.id..':extra'
 	    local success = db:hdel(hash, blocks[2])
 	    if success == 1 then
-	    	local out = _("The command '%s' has been deleted!"):format(blocks[2])
+	    	local out = _("O comando '%s' foi deletado!"):format(blocks[2])
 	        api.sendReply(msg, out)
 	    else
-	        local out = _("The command '%s' does not exist!"):format(blocks[2])
+	        local out = _("Esse coamando '%s' nem existe!"):format(blocks[2])
 	        api.sendReply(msg, out)
 	    end
     else

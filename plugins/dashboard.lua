@@ -45,16 +45,16 @@ local function doKeyboard_dashboard(chat_id)
     local keyboard = {}
     keyboard.inline_keyboard = {
 	    {
-            {text = _("Settings"), callback_data = 'dashboard:settings:'..chat_id},
+            {text = _("Configs"), callback_data = 'dashboard:settings:'..chat_id},
             {text = _("Admins"), callback_data = 'dashboard:adminlist:'..chat_id}
 		},
 	    {
-		    {text = _("Rules"), callback_data = 'dashboard:rules:'..chat_id},
-		    {text = _("Extra commands"), callback_data = 'dashboard:extra:'..chat_id}
+		    {text = _("Regras"), callback_data = 'dashboard:rules:'..chat_id},
+		    {text = _("Comandos extras"), callback_data = 'dashboard:extra:'..chat_id}
         },
 	    {
-	   	    {text = _("Flood settings"), callback_data = 'dashboard:flood:'..chat_id},
-	   	    {text = _("Media settings"), callback_data = 'dashboard:media:'..chat_id}
+	   	    {text = _("Configs de Flood"), callback_data = 'dashboard:flood:'..chat_id},
+	   	    {text = _("Configs de Midias"), callback_data = 'dashboard:media:'..chat_id}
 	    },
     }
     
@@ -65,10 +65,10 @@ function plugin.onTextMessage(msg, blocks)
     if msg.chat.type ~= 'private' then
         local chat_id = msg.chat.id
         local keyboard = doKeyboard_dashboard(chat_id)
-        local res = api.sendMessage(msg.from.id, _("Navigate this message to see *all the info* about this group!"), true, keyboard)
+        local res = api.sendMessage(msg.from.id, _("Navegue nesta mensagem para ver *todas as informações* sobre esse grupo!"), true, keyboard)
         if not misc.is_silentmode_on(msg.chat.id) then --send the responde in the group only if the silent mode is off
             if res then
-                api.sendMessage(msg.chat.id, _("_I've sent you the group dashboard via private message_"), true)
+                api.sendMessage(msg.chat.id, _("_Enviei o painel do grupo via mensagem privada_"), true)
             else
                 misc.sendStartMe(msg)
             end
@@ -82,60 +82,60 @@ function plugin.onCallbackQuery(msg, blocks)
     local text, notification
 	local res = api.getChat(chat_id)
 	if not res then
-		api.answerCallbackQuery(msg.cb_id, _("🚫 This group does not exist"))
+		api.answerCallbackQuery(msg.cb_id, _("🚫 Este grupo não existe"))
 		return
 	end
 	-- Private chats don't have an username
 	local private = not res.result.username
 	local res = api.getChatMember(chat_id, msg.from.id)
 	if not res or (res.result.status == 'left' or res.result.status == 'kicked') and private then
-		api.editMessageText(msg.from.id, msg.message_id, _("🚷 You are not a member of the chat. " ..
-			"You can't see the settings of a private group."))
+		api.editMessageText(msg.from.id, msg.message_id, _("🚷 Você não é um membro do grupo."..
+                         "Você não pode ver as configurações de um grupo privado."))
 		return
 	end
     local keyboard = doKeyboard_dashboard(chat_id)
     if request == 'settings' then
         text = misc.getSettings(chat_id)
-        notification = _("ℹ️ Group ► Settings")
+        notification = _("ℹ️ Grupo ► Configs")
     end
     if request == 'rules' then
         text = misc.getRules(chat_id)
-        notification = _("ℹ️ Group ► Rules")
+        notification = _("ℹ️ Grupo ► Regras")
     end
     if request == 'adminlist' then
         local creator, admins = misc.getAdminlist(chat_id)
         if not creator then
             -- creator is false, admins is the error code
-            text = _("I got kicked out of this group 😓")
+            text = _("Eu fui expulso desse grupo 😓")
         else
-            text = _("*Creator*:\n%s\n\n*Admins*:\n%s"):format(creator, admins)
+            text = _("*Deus*:\n%s\n\n*Semideuses*:\n%s"):format(creator, admins)
         end
-        notification = _("ℹ️ Group ► Admin list")
+        notification = _("ℹ️ Grupo ► Admins")
     end
     if request == 'extra' then
         text = misc.getExtraList(chat_id)
-        notification = _("ℹ️ Group ► Extra")
+        notification = _("ℹ️ Grupo ► Extras")
     end
     if request == 'flood' then
         text = getFloodSettings_text(chat_id)
-        notification = _("ℹ️ Group ► Flood")
+        notification = _("ℹ️ Grupo ► Flood")
     end
     if request == 'media' then
 		local media_texts = {
-			photo = _("Images"),
+			photo = _("Imagens"),
 			gif = _("GIFs"),
 			video = _("Videos"),
-			document = _("Documents"),
+			document = _("Documentos"),
 			TGlink = _("telegram.me links"),
-			voice = _("Vocal messages"),
+			voice = _("Audio mesagens"),
 			link = _("Links"),
-			audio = _("Music"),
+			audio = _("Musicas"),
 			sticker = _("Stickers"),
-			contact = _("Contacts"),
+			contact = _("Contactos"),
 			game = _("Games"),
-			location = _("Locations"),
+			location = _("Locatilizações"),
 		}
-        text = _("*Current media settings*:\n\n")
+        text = _("*Configurações de mídia atuais*:\n\n")
         for media, default_status in pairs(config.chat_settings['media']) do
             local status = (db:hget('chat:'..chat_id..':media', media)) or default_status
             if status == 'ok' then
@@ -146,7 +146,7 @@ function plugin.onCallbackQuery(msg, blocks)
             local media_cute_name = media_texts[media] or media
             text = text..'`'..media_cute_name..'` ≡ '..status..'\n'
         end
-        notification = _("ℹ️ Group ► Media")
+        notification = _("ℹ️ Grupo ► Midia")
     end
     api.editMessageText(msg.from.id, msg.message_id, text, true, keyboard)
     api.answerCallbackQuery(msg.cb_id, notification)

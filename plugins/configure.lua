@@ -21,7 +21,7 @@ function plugin.onTextMessage(msg, blocks)
             local res = api.sendMessage(msg.from.id, _("_Gerencie seu grupo_"), true, keyboard)
             if not misc.is_silentmode_on(msg.chat.id) then --send the responde in the group only if the silent mode is off
                 if res then
-                    api.sendMessage(msg.chat.id, _("_Enviei via mensagem privada_"), true)
+                    api.sendMessage(msg.chat.id, _("_Enviei a mensagem no pv_"), true)
                 else
                     misc.sendStartMe(msg)
                 end

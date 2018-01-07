@@ -23,7 +23,7 @@ local function get_welcome(msg)
 	elseif type == 'custom' then
 		return content:replaceholders(msg)
 	else
-		return _("Hi %s, and welcome to *%s*!"):format(msg.new_chat_member.first_name:escape(), msg.chat.title:escape_hard('bold'))
+		return _("Oi %s, e ban vindo ao *%s*kkk!"):format(msg.new_chat_member.first_name:escape(), msg.chat.title:escape_hard('bold'))
 	end
 end
 
@@ -43,7 +43,7 @@ local function get_goodbye(msg)
 			if msg.left_chat_member.username then
 				name = name:escape() .. ' (@' .. msg.left_chat_member.username:escape() .. ')'
 			end
-			return _("Goodbye, %s!"):format(name)
+			return _("Já vai tarde otário, %s!"):format(name)
 		end
 		return content:replaceholders(msg)
 	end
@@ -57,7 +57,7 @@ function plugin.onTextMessage(msg, blocks)
         local input = blocks[2]
         
         if not input and not msg.reply then
-			api.sendReply(msg, _("Welcome and...?")) return
+			api.sendReply(msg, _("E...?")) return
         end
         
         local hash = 'chat:'..msg.chat.id..':welcome'
@@ -87,7 +87,7 @@ function plugin.onTextMessage(msg, blocks)
                 api.sendMessage(msg.chat.id, misc.get_sm_error_string(code), true)
             else
                 local id = res.result.message_id
-                api.editMessageText(msg.chat.id, id, _("*Custom welcome message saved!*"), true)
+                api.editMessageText(msg.chat.id, id, _("*Salvei!*"), true)
             end
         end
     end
@@ -99,7 +99,7 @@ function plugin.onTextMessage(msg, blocks)
 
 		-- ignore if not input text and not reply
 		if not input and not msg.reply then
-			api.sendReply(msg, _("No goodbye message"), false)
+			api.sendReply(msg, _("Sem mensagem de adeus"), false)
 			return
 		end
 
@@ -131,7 +131,7 @@ function plugin.onTextMessage(msg, blocks)
 			api.sendMessage(msg.chat.id, misc.get_sm_error_string(code), true)
 		else
 			local id = res.result.message_id
-			api.editMessageText(msg.chat.id, id, _("*Custom goodbye message saved!*"), true)
+			api.editMessageText(msg.chat.id, id, _("*Salvei!*"), true)
 		end
 	end
     if blocks[1] == 'new_chat_member' then
@@ -149,7 +149,7 @@ function plugin.onTextMessage(msg, blocks)
 			local keyboard
 			local attach_button = (db:hget('chat:'..msg.chat.id..':settings', 'Welbut')) or config.chat_settings['settings']['Welbut']
 			if attach_button == 'on' then
-				keyboard = {inline_keyboard={{{text = _('Read the rules'), url = misc.deeplink_constructor(msg.chat.id, 'rules')}}}}
+				keyboard = {inline_keyboard={{{text = _('Leia as regras'), url = misc.deeplink_constructor(msg.chat.id, 'rules')}}}}
 			end
 			api.sendMessage(msg.chat.id, text, true, keyboard)
 		end

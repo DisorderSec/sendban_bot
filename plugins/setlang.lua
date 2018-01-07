@@ -14,17 +14,17 @@ end
 function plugin.onTextMessage(msg, blocks)
 	if not (msg.chat.type ~= 'private' and not roles.is_admin_cached(msg)) then
 		local keyboard = doKeyboard_lang()
-		api.sendMessage(msg.chat.id, _("*List of available languages*:"), true, keyboard)
+		api.sendMessage(msg.chat.id, _("*Lista das linguagens disponíveis*:"), true, keyboard)
 	end
 end
 
 function plugin.onCallbackQuery(msg, blocks)
 	if msg.chat.type ~= 'private' and not roles.is_admin_cached(msg) then
-		api.answerCallbackQuery(msg.cb_id, _("You are not an admin"))
+		api.answerCallbackQuery(msg.cb_id, _("Você não é um semideus"))
 	else
 		if blocks[1] == 'selectlang' then
 			local keyboard = doKeyboard_lang()
-			api.editMessageText(msg.chat.id, msg.message_id, _("*List of available languages*:"), true, keyboard)
+			api.editMessageText(msg.chat.id, msg.message_id, _("*Lista das linguagens disponíveis*:"), true, keyboard)
 		else
 			locale.language = blocks[1]
 	    	db:set('lang:'..msg.chat.id, locale.language)
