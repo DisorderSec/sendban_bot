@@ -89,8 +89,7 @@ function plugin.onCallbackQuery(msg, blocks)
 	local private = not res.result.username
 	local res = api.getChatMember(chat_id, msg.from.id)
 	if not res or (res.result.status == 'left' or res.result.status == 'kicked') and private then
-		api.editMessageText(msg.from.id, msg.message_id, _("🚷 Você não é um membro do grupo."..
-                         "Você não pode ver as configurações de um grupo privado."))
+		api.editMessageText(msg.from.id, msg.message_id, _("🚷 Você não é um membro do grupo."))
 		return
 	end
     local keyboard = doKeyboard_dashboard(chat_id)
